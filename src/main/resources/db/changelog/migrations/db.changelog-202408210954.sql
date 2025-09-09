@@ -5,11 +5,17 @@
 CREATE TABLE BOARDS_COLUMNS(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    `order` int NOT NULL,
+    `order` INT NOT NULL,
     kind VARCHAR(7) NOT NULL,
     board_id BIGINT NOT NULL,
+    description TEXT,
+    status VARCHAR(20) DEFAULT 'ACTIVE',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT boards__boards_columns_fk FOREIGN KEY (board_id) REFERENCES BOARDS(id) ON DELETE CASCADE,
-    CONSTRAINT id_order_uk UNIQUE KEY unique_board_id_order (board_id, `order`)
+    CONSTRAINT id_order_uk UNIQUE KEY unique_board_id_order (board_id, `order`),
+    CHECK (`order` >= 0)
 ) ENGINE=InnoDB;
+
 
 --rollback DROP TABLE BOARDS_COLUMNS
